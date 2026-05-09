@@ -10,6 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PrivateResponse {
+public class ResponseUserDTO {
     private Long Id;
 }

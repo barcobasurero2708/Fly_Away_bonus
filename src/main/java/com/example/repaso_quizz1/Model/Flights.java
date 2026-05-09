@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "flights")
@@ -19,15 +20,11 @@ public class Flights {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    private String airline;
+
+    @Column(unique = true)
     private String numVuelo;
-
-    @Column(nullable = false)
     private LocalDate horaSalida;
-
-    @Column(nullable = false)
     private LocalDate horaLlegada;
-
-    @Column(nullable = false)
     private Integer asientosDisponibles;
 }

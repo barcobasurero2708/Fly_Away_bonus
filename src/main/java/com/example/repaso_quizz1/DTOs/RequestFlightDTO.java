@@ -8,10 +8,16 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
 public class RequestFlightDTO {
+
+    @NotNull
+    @NotEmpty
+    private String airline;
+
     @NotNull
     @NotEmpty
     @Pattern(regexp = "^[A-Z0-9]{1,6}$")
@@ -26,7 +32,6 @@ public class RequestFlightDTO {
     private LocalDate horaLlegada;
 
     @NotNull
-    @NotEmpty
-    @Min(0)
+    @Min(1)
     private Integer asientosDisponibles;
 }
