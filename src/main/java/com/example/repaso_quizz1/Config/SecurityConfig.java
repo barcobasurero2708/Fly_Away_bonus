@@ -1,7 +1,6 @@
     package com.example.repaso_quizz1.Config;
 
     import com.example.repaso_quizz1.Auth.JwtAuthorizationFilter;
-    import com.example.repaso_quizz1.Service.UserService;
     import org.springframework.context.annotation.Bean;
     import org.springframework.context.annotation.Configuration;
     import org.springframework.security.authentication.AuthenticationManager;
@@ -55,13 +54,7 @@
                     )
 
                     .authorizeHttpRequests(auth -> auth
-
-                            .requestMatchers(
-                                    "/users/register",
-                                    "/auth/login",
-                                    "/flights/create"
-                            ).permitAll()
-
+                            .requestMatchers("/users/register", "/auth/login", "/flights/create").permitAll()
                             .anyRequest().authenticated()
                     )
 

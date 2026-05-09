@@ -1,12 +1,14 @@
 package com.example.repaso_quizz1.Controller;
 
 import com.example.repaso_quizz1.DTOs.RequestFlightDTO;
+import com.example.repaso_quizz1.DTOs.ResponseFlightDTO;
 import com.example.repaso_quizz1.Model.Flights;
 import com.example.repaso_quizz1.Service.FlightService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,23 +21,22 @@ public class FlightController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Flights> createFlight(@Valid @RequestBody RequestFlightDTO request){
+    public ResponseEntity<ResponseFlightDTO> createFlight(@Valid @RequestBody RequestFlightDTO request){
         return ResponseEntity.ok(flightService.createFlight(request));
     }
 
     @GetMapping("search/number")
-    public ResponseEntity<Flights> searchByNumVuelo(@RequestParam String numVuelo){
-        return ResponseEntity.ok(flightService.searchByNumVuelo(numVuelo).get(0));
+    public ResponseEntity<ResponseFlightDTO> searchByNumVuelo(@RequestParam String numVuelo){
+        return ResponseEntity.ok(flightService.searchByNumVuelo(numVuelo));
     }
 
     @GetMapping("search/airline")
-    public ResponseEntity<Flights> searchByAirline(@RequestParam String airline){
-        return ResponseEntity.ok(flightService.searchByAirline(airline).get(0));
+    public ResponseEntity<List<ResponseFlightDTO>> searchByAirline(@RequestParam String airline){
+        return ResponseEntity.ok(flightService.searchByAirline(airline));
     }
 
     @GetMapping("/search/date")
-    public ResponseEntity<List<Flights>> searchByDateRange(@RequestParam LocalDateTime start, @RequestParam LocalDateTime end){
+    public ResponseEntity<List<ResponseFlightDTO>> searchByDateRange(@RequestParam LocalDate start, @RequestParam LocalDate end){
         return ResponseEntity.ok(flightService.searchByDateRange(start, end));
     }
-
 }
