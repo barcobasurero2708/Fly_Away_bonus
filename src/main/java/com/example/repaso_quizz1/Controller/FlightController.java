@@ -7,6 +7,9 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @RestController
 @RequestMapping("/flights")
 public class FlightController {
@@ -28,6 +31,11 @@ public class FlightController {
     @GetMapping("search/airline")
     public ResponseEntity<Flights> searchByAirline(@RequestParam String airline){
         return ResponseEntity.ok(flightService.searchByAirline(airline).get(0));
+    }
+
+    @GetMapping("/search/date")
+    public ResponseEntity<List<Flights>> searchByDateRange(@RequestParam LocalDateTime start, @RequestParam LocalDateTime end){
+        return ResponseEntity.ok(flightService.searchByDateRange(start, end));
     }
 
 }

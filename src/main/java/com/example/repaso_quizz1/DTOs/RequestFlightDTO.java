@@ -24,11 +24,9 @@ public class RequestFlightDTO {
     private String numVuelo;
 
     @NotNull
-    @NotEmpty
     private LocalDate horaSalida;
 
     @NotNull
-    @NotEmpty
     private LocalDate horaLlegada;
 
     @NotNull

@@ -5,6 +5,7 @@ import com.example.repaso_quizz1.Model.Flights;
 import com.example.repaso_quizz1.Repository.FlightsRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -48,5 +49,9 @@ public class FlightService {
 
     public List<Flights> searchByAirline(String airline){
         return flightsRepository.findByAirlineContaining(airline);
+    }
+
+    public List<Flights> searchByDateRange(LocalDateTime start, LocalDateTime end){
+        return flightsRepository.findByHoraSalidaBetween(start, end);
     }
 }
