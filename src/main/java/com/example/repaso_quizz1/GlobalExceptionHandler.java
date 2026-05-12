@@ -3,7 +3,6 @@ package com.example.repaso_quizz1;
 import com.example.repaso_quizz1.Exceptions.ResourceNotFoundException;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice

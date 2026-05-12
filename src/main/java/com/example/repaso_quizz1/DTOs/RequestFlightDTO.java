@@ -1,15 +1,11 @@
 package com.example.repaso_quizz1.DTOs;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -27,10 +23,12 @@ public class RequestFlightDTO {
     private String numVuelo;
 
     @NotNull
-    private LocalDate horaSalida;
+    @Past
+    private LocalDateTime horaSalida;
 
+    @Future
     @NotNull
-    private LocalDate horaLlegada;
+    private LocalDateTime horaLlegada;
 
     @NotNull
     @Min(1)

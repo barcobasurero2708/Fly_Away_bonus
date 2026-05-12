@@ -5,9 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "flights")
@@ -15,7 +13,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Flights {
+public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,7 +22,7 @@ public class Flights {
 
     @Column(unique = true)
     private String numVuelo;
-    private LocalDate horaSalida;
-    private LocalDate horaLlegada;
+    private LocalDateTime horaSalida;
+    private LocalDateTime horaLlegada;
     private Integer asientosDisponibles;
 }

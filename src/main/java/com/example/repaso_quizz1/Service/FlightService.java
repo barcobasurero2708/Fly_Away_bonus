@@ -2,11 +2,11 @@ package com.example.repaso_quizz1.Service;
 
 import com.example.repaso_quizz1.DTOs.RequestFlightDTO;
 import com.example.repaso_quizz1.DTOs.ResponseFlightDTO;
-import com.example.repaso_quizz1.Model.Flights;
+import com.example.repaso_quizz1.Model.Flight;
 import com.example.repaso_quizz1.Repository.FlightsRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -16,18 +16,18 @@ public class FlightService {
         this.flightsRepository = flightsRepository;
     }
 
-    private ResponseFlightDTO toResponseFlightDTO(Flights flight) {
+    private ResponseFlightDTO toResponseFlightDTO(Flight flight) {
         return new ResponseFlightDTO(
                 flight.getAirline(),
                 flight.getNumVuelo(),
-                flight.getHoraSalida().toString(),
-                flight.getHoraLlegada().toString(),
+                flight.getHoraSalida(),
+                flight.getHoraLlegada(),
                 flight.getAsientosDisponibles()
         );
     }
 
     public ResponseFlightDTO createFlight(RequestFlightDTO request) {
-        Flights existingFlight = flightsRepository.findByNumVuelo(request.getNumVuelo());
+        Flight existingFlight = flightsRepository.findByNumVuelo(request.getNumVuelo());
 
         if(existingFlight != null){
             throw new RuntimeException("El número de vuelo ya existe");
@@ -37,7 +37,7 @@ public class FlightService {
                     "La hora de salida debe ser menor a llegada"
             );
         }
-        Flights flight = new Flights();
+        Flight flight = new Flight();
 
         flight.setAirline(request.getAirline());
 
@@ -51,32 +51,55 @@ public class FlightService {
                 request.getAsientosDisponibles()
         );
 
-        Flights savedFlight = flightsRepository.save(flight);
+        Flight savedFlight = flightsRepository.save(flight);
 
         return toResponseFlightDTO(savedFlight);
     }
 
-    public ResponseFlightDTO searchByNumVuelo(String numVuelo){
-        Flights flight = flightsRepository.findByNumVuelo(numVuelo);
-
-        if (flight == null) {
-            throw new RuntimeException("Vuelo no encontrado");
+    public List<ResponseFlightDTO> search(
+            String flightNumber,
+            String airlineName,
+            LocalDateTime estDepartureTimeFrom,
+            LocalDateTime estDepartureTimeTo
+    ) {
+        if (flightNumber != null) {
+            return flightsRepository
+                    .findByNumVueloContaining(flightNumber)
+                    .stream()
+                    .map(this::toResponseFlightDTO)
+                    .toList();
         }
 
+
+        if (airlineName != null) {
+            return flightsRepository
+                    .findByAirlineContaining(airlineName)
+                    .stream()
+                    .map(this::toResponseFlightDTO)
+                    .toList();
+        }
+
+        if (
+                estDepartureTimeFrom != null
+                        &&
+                        estDepartureTimeTo != null
+        ) {
+
+            return flightsRepository
+                    .findByHoraSalidaBetween(
+                            estDepartureTimeFrom,
+                            estDepartureTimeTo
+                    )
+                    .stream()
+                    .map(this::toResponseFlightDTO)
+                    .toList();
+        }
+
+        return List.of();
+    }
+
+    public ResponseFlightDTO getFlightById(Long id) {
+        Flight flight = flightsRepository.findById(id).orElseThrow(() -> new RuntimeException("Vuelo no encontrado"));
         return toResponseFlightDTO(flight);
-    }
-
-    public List<ResponseFlightDTO> searchByAirline(String airline){
-        return flightsRepository.findByAirlineContaining(airline)
-                .stream()
-                .map(this::toResponseFlightDTO)
-                .toList();
-    }
-
-    public List<ResponseFlightDTO> searchByDateRange(LocalDate start, LocalDate end){
-        return flightsRepository.findByHoraSalidaBetween(start, end)
-                .stream()
-                .map(this::toResponseFlightDTO)
-                .toList();
     }
 }

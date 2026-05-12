@@ -54,7 +54,7 @@
                     )
 
                     .authorizeHttpRequests(auth -> auth
-                            .requestMatchers("/users/register", "/auth/login", "/flights/create").permitAll()
+                            .requestMatchers("/users/register", "/auth/login", "/flights/create", "/cleanup").permitAll()
                             .anyRequest().authenticated()
                     )
 

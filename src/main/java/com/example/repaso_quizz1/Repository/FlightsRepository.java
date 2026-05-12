@@ -1,18 +1,19 @@
 package com.example.repaso_quizz1.Repository;
 
-import com.example.repaso_quizz1.Model.Flights;
+import com.example.repaso_quizz1.Model.Flight;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface FlightsRepository extends JpaRepository<Flights, Long> {
+public interface FlightsRepository extends JpaRepository<Flight, Long> {
 
-    List<Flights> findByAirlineContaining(String airline);
+    List<Flight> findByAirlineContaining(String airline);
 
-    List<Flights> findByHoraSalidaBetween(LocalDate start, LocalDate end);
+    List<Flight> findByNumVueloContaining(String numeroVuelo);
 
-    Flights findByNumVuelo(String numVuelo);
+    List<Flight> findByHoraSalidaBetween(LocalDateTime start, LocalDateTime end);
+
+    Flight findByNumVuelo(String numVuelo);
 }

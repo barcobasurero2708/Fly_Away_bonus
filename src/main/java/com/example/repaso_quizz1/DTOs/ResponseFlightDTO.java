@@ -6,23 +6,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResponseFlightDTO {
     @NotNull
-    private String Airline;
+    private String airline;
 
     @NotNull
-    private String NumVuelo;
+    private String numVuelo;;
 
     @NotNull
-    private String HoraSalida;
+    private LocalDateTime horaSalida;
 
     @NotNull
-    private String HoraLlegada;
+    private LocalDateTime horaLlegada;
 
     @NotNull
-    private Integer AsientosDisponibles;
+    private Integer asientosDisponibles;
 }

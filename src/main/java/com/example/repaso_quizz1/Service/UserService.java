@@ -1,5 +1,6 @@
 package com.example.repaso_quizz1.Service;
 
+import com.example.repaso_quizz1.DTOs.ResponseUserDTO;
 import com.example.repaso_quizz1.Model.User;
 import com.example.repaso_quizz1.Repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +14,8 @@ public class UserService implements UserDetailsService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
+
 
     @Override
     public UserDetails loadUserByUsername(String email)
